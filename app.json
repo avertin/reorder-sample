@@ -1,0 +1,12 @@
+{
+  "name": "sample-reorder",
+  "displayName": "sample-reorder",
+  "expo": {
+    "name": "sample-reorder",
+    "slug": "sample-reorder",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
