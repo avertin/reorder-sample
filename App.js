@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AutoDragSortableView } from 'react-native-drag-sort'
 import { range } from 'lodash'; 
 
 export default function App() {
-  const [content, setContent] = useState(range(0, 4).map(x => ({ id: x })));
+  const originalContent = range(0, 4).map(x => ({ id: x }));
+  const [content, setContent] = useState(originalContent);
   const parentWidth = Dimensions.get('window').width;
   const childrenWidth = (parentWidth / 2) - 50;
   const childrenHeight = childrenWidth;
@@ -17,18 +18,13 @@ export default function App() {
     );
   }
 
-  const handleDragEnd = (fromIndex, toIndex) => {
-    // update the content order 
-    console.log('handleDragEnd - fromIndex', fromIndex);
-    console.log('handleDragEnd - toIndex', toIndex);
-    let updatedContent = [...content];
-    updatedContent.splice(toIndex, 0, updatedContent.splice(fromIndex, 1)[0]);
-    console.log('handleDragEnd - updatedContent', updatedContent);
-    setContent(updatedContent)
-  }
-
   const handleDataChange = (data) => {
     console.log('handleDataChange - data', data);
+  }
+
+  const handlePress = (data) => {
+    console.log('handlePress');
+    setContent([...originalContent])
   }
 
   return (
@@ -40,9 +36,11 @@ export default function App() {
         childrenHeight={childrenHeight}
         keyExtractor={(item,index)=> item.id}
         renderItem={renderItem}
-        onDragEnd={handleDragEnd}
         onDataChange={handleDataChange}
       />
+      <TouchableOpacity onPress={handlePress}> 
+        <Text>{'Undo'}</Text> 
+      </TouchableOpacity>
     </View>
   );
 }
